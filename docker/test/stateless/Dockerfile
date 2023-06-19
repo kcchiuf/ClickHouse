@@ -20,6 +20,7 @@ RUN apt-get update -y \
             netcat-openbsd \
             nodejs \
             npm \
+            odbcinst \
             openjdk-11-jre-headless \
             openssl \
             postgresql-client \
