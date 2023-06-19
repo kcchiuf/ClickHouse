@@ -80,7 +80,7 @@ function start_server
 
 function clone_root
 {
-    git config --global --add safe.directory "$FASTTEST_SOURCE"
+    [ "$UID" -eq 0 ] && git config --global --add safe.directory "$FASTTEST_SOURCE"
     git clone --depth 1 https://github.com/ClickHouse/ClickHouse.git -- "$FASTTEST_SOURCE" 2>&1 | ts '%Y-%m-%d %H:%M:%S' | tee "$FASTTEST_OUTPUT/clone_log.txt"
 
     (
@@ -204,7 +204,7 @@ function build
         if [ "$COPY_CLICKHOUSE_BINARY_TO_OUTPUT" -eq "1" ]; then
             mkdir -p "$FASTTEST_OUTPUT/binaries/"
             cp programs/clickhouse "$FASTTEST_OUTPUT/binaries/clickhouse"
-            cp programs/clickhouse-test "$FASTTEST_OUTPUT/binaries/clickhouse-test"
+            #cp programs/clickhouse-test "$FASTTEST_OUTPUT/binaries/clickhouse-test"
 
             strip programs/clickhouse -o "$FASTTEST_OUTPUT/binaries/clickhouse-stripped"
             zstd --threads=0 "$FASTTEST_OUTPUT/binaries/clickhouse-stripped"
