@@ -202,10 +202,11 @@ function build
           | ts '%Y-%m-%d %H:%M:%S' \
           | tee "$FASTTEST_OUTPUT/test_result.txt"
         if [ "$COPY_CLICKHOUSE_BINARY_TO_OUTPUT" -eq "1" ]; then
-            cp programs/clickhouse "$FASTTEST_OUTPUT/clickhouse"
+            cp programs/clickhouse "$FASTTEST_OUTPUT/binaries/clickhouse"
+            cp programs/clickhouse-test "$FASTTEST_OUTPUT/binaries/clickhouse-test"
 
-            strip programs/clickhouse -o "$FASTTEST_OUTPUT/clickhouse-stripped"
-            zstd --threads=0 "$FASTTEST_OUTPUT/clickhouse-stripped"
+            strip programs/clickhouse -o "$FASTTEST_OUTPUT/binaries/clickhouse-stripped"
+            zstd --threads=0 "$FASTTEST_OUTPUT/binaries/clickhouse-stripped"
         fi
         ccache_status
         ccache --evict-older-than 1d ||:
